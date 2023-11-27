@@ -1,0 +1,19 @@
+.left-bar {
+    background-color: #f8f9fa;
+    list-style-type: none;
+    height: 100%;
+    padding-left: 1rem;
+    padding-top: 1.3rem;
+
+    li {
+        a {
+            text-decoration: none;
+            color: #6c86ab;
+
+            &.active {
+                color: #007ad9;
+            }
+        }
+        
+    }
+}

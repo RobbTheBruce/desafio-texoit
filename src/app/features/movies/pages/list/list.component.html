@@ -1,0 +1,82 @@
+<section class="container">
+  <section class="row">
+    <section class="col-12 mt-3">
+      <app-card>
+        <h3>List movies</h3>
+        <table class="table table-bordered table-striped table-hover m-0">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col" class="text-center">
+                Year
+                <select
+                  class="form-select me-2"
+                  [(ngModel)]="inputYear"
+                  (change)="getMovies()"
+                >
+                  <option *ngFor="let year of years" [value]="year">{{year}}</option>
+                </select>
+              </th>
+              <th scope="col">Title</th>
+              <th scope="col" class="text-center">
+                Winner?
+                <select
+                  class="form-select me-2"
+                  [(ngModel)]="inputWinner"
+                  (change)="getMovies()"
+                >
+                  <option selected>Yes/No</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </select>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of movies?.content || []">
+              <td>{{ item.id }}</td>
+              <td>{{ item.year }}</td>
+              <td>{{ item.title }}</td>
+              <td>{{ item.winner }}</td>
+            </tr>
+            <tr *ngIf="movies?.totalPages && movies.totalPages > 1">
+              <td colspan="4">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center m-0">
+                    <li class="page-item {{ page == 0 ? 'disabled' : '' }}" (click)="prevPage()">
+                      <a class="page-link" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <li
+                      class="page-item {{
+                        i == movies?.number ? 'active' : ''
+                      }}"
+                      *ngFor="
+                        let item of [].constructor(movies?.totalPages);
+                        let i = index
+                      "
+                      (click)="this.page = i; getMovies()"
+                    >
+                      <a class="page-link">{{ i + 1 }}</a>
+                    </li>
+                    <li
+                      class="page-item {{
+                        page + 1 == movies?.totalPages ? 'disabled' : ''
+                      }}"
+                      (click)="nextPage()"
+                    >
+                      <a class="page-link" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </app-card>
+    </section>
+  </section>
+</section>
