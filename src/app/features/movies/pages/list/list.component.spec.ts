@@ -34,13 +34,6 @@ describe('ListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize years with the last 10 years', () => {
-    const currentYear = new Date().getFullYear();
-    expect(component.years).toEqual(
-      Array.from({ length: 10 }, (_, index) => currentYear - index)
-    );
-  });
-
   it('should call MovieService to get movies on initialization', fakeAsync(() => {
     const mockData = {
       content: [],

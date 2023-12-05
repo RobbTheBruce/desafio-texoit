@@ -87,11 +87,12 @@
       <app-card>
         <h3>List movie winners by year</h3>
         <div class="d-flex mb-3">
-          <select class="form-select me-2" [(ngModel)]="inputYear">
-            <option *ngFor="let year of years" [value]="year">
-              {{ year }}
-            </option>
-          </select>
+          <input
+            class="form-control me-2"
+            type="number"
+            placeholder="Search by year"
+            [(ngModel)]="inputYear"
+          />
           <button
             type="button"
             class="btn btn-primary"

@@ -9,13 +9,12 @@
               <th scope="col">ID</th>
               <th scope="col" class="text-center">
                 Year
-                <select
-                  class="form-select me-2"
+                <input
+                  class="form-control me-2"
+                  type="number"
+                  placeholder="Search by year"
                   [(ngModel)]="inputYear"
-                  (change)="getMovies()"
-                >
-                  <option *ngFor="let year of years" [value]="year">{{year}}</option>
-                </select>
+                />
               </th>
               <th scope="col">Title</th>
               <th scope="col" class="text-center">
@@ -25,7 +24,7 @@
                   [(ngModel)]="inputWinner"
                   (change)="getMovies()"
                 >
-                  <option selected>Yes/No</option>
+                  <option selected value="">Yes/No</option>
                   <option value="true">Yes</option>
                   <option value="false">No</option>
                 </select>
@@ -43,7 +42,10 @@
               <td colspan="4">
                 <nav aria-label="Page navigation example">
                   <ul class="pagination justify-content-center m-0">
-                    <li class="page-item {{ page == 0 ? 'disabled' : '' }}" (click)="prevPage()">
+                    <li
+                      class="page-item {{ page == 0 ? 'disabled' : '' }}"
+                      (click)="prevPage()"
+                    >
                       <a class="page-link" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                       </a>

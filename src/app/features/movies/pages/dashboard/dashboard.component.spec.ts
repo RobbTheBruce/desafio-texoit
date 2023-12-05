@@ -20,7 +20,7 @@ describe('DashboardComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [DashboardComponent],
-      imports: [FormsModule, MoviesModule],
+      imports: [MoviesModule],
       providers: [{ provide: MovieService, useValue: spy }],
     });
 
@@ -35,29 +35,22 @@ describe('DashboardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize years with the last 10 years', () => {
-    const currentYear = new Date().getFullYear();
-    expect(component.years).toEqual(
-      Array.from({ length: 10 }, (_, index) => currentYear - index)
-    );
-  });
-
-  it('should call MovieService to get years with multiple winners on initialization', fakeAsync(() => {
-    const mockData = {
+  it('should fetch years with multiple winners on initialization', fakeAsync(() => {
+    const mockYearsData = {
       years: [
         { year: 1986, winnerCount: 2 },
         { year: 1990, winnerCount: 2 },
         { year: 2015, winnerCount: 2 },
       ],
     };
-    movieServiceSpy.get
-      .withArgs({ projection: 'years-with-multiple-winners' })
-      .and.returnValue(of(mockData));
 
-    fixture.detectChanges();
-    tick();
+    movieServiceSpy.get.and.returnValue(of(mockYearsData));
+    component.getYearsWithMultipleWinner();
 
-    expect(component.yearsWithMultipleWinner).toEqual(mockData);
+    expect(component.yearsWithMultipleWinner).toEqual(mockYearsData);
+    expect(movieServiceSpy.get).toHaveBeenCalledWith({
+      projection: 'years-with-multiple-winners',
+    });
   }));
 
   it('should call MovieService to get studios with win count on initialization', fakeAsync(() => {
@@ -93,12 +86,14 @@ describe('DashboardComponent', () => {
         { name: 'DreamWorks', winCount: 1 },
       ],
     };
-    movieServiceSpy.get.withArgs(jasmine.objectContaining({ projection: 'studios-with-win-count' })).and.returnValue(of(mockData));
 
-    fixture.detectChanges();
-    tick();
+    movieServiceSpy.get.and.returnValue(of(mockData));
+    component.getStudioWithWinCount();
 
     expect(component.studiosWithWinCount).toEqual(mockData);
+    expect(movieServiceSpy.get).toHaveBeenCalledWith({
+      projection: 'studios-with-win-count',
+    });
   }));
 
   it('should call MovieService to get max-min win interval for producers on initialization', fakeAsync(() => {
@@ -120,14 +115,14 @@ describe('DashboardComponent', () => {
         },
       ],
     };
-    movieServiceSpy.get
-      .withArgs({ projection: 'max-min-win-interval-for-producers' })
-      .and.returnValue(of(mockData));
 
-    fixture.detectChanges();
-    tick();
+    movieServiceSpy.get.and.returnValue(of(mockData));
+    component.getMaxMinWinInterval();
 
     expect(component.maxMinWinInterval).toEqual(mockData);
+    expect(movieServiceSpy.get).toHaveBeenCalledWith({
+      projection: 'max-min-win-interval-for-producers',
+    });
   }));
 
   it('should call MovieService to search movies by year when searchByYear is called', fakeAsync(() => {

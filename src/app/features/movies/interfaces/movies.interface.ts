@@ -5,4 +5,4 @@ export interface Movies {
   studios: string[];
   producers: string[];
   winner: boolean;
-};
+}

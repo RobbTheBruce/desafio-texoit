@@ -20,9 +20,9 @@ const MoviesRoutes: Routes = [
       {
         path: '',
         component: DashboardComponent,
-      }
+      },
     ],
-  }
+  },
 ];
 
 @NgModule({

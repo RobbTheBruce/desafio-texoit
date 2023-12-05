@@ -8,16 +8,12 @@ import { MoviesDetail } from '../../interfaces/movies-detail.interface';
 })
 export class ListComponent implements OnInit {
   movies!: MoviesDetail;
-  inputYear: string = '2023';
-  inputWinner: boolean = true;
+  inputYear: string = '';
+  inputWinner: string = '';
   page: number = 0;
   size: number = 10;
-  years!: number[];
 
-  constructor(private movieService: MovieService) {
-    const currentYear = new Date().getFullYear();
-    this.years = Array.from({ length: 10 }, (_, index) => currentYear - index);
-  }
+  constructor(private movieService: MovieService) {}
 
   ngOnInit(): void {
     this.getMovies();
@@ -28,8 +24,8 @@ export class ListComponent implements OnInit {
       .get({
         page: this.page,
         size: this.size,
-        winner: this.inputWinner,
-        year: this.inputYear,
+        winner: this.inputWinner || '',
+        year: this.inputYear || '',
       })
       .subscribe((data: MoviesDetail) => {
         this.movies = data;

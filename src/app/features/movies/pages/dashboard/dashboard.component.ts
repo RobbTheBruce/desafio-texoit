@@ -23,26 +23,32 @@ export class DashboardComponent implements OnInit {
   };
   movies: Movies[] = [];
 
-  inputYear: string = '';
-  years!: number[];
+  inputYear!: string;
 
-  constructor(private movieService: MovieService) {
-    const currentYear = new Date().getFullYear();
-    this.years = Array.from({ length: 10 }, (_, index) => currentYear - index);
-  }
+  constructor(private movieService: MovieService) {}
 
   ngOnInit(): void {
+    this.getYearsWithMultipleWinner();
+    this.getStudioWithWinCount();
+    this.getMaxMinWinInterval();
+  }
+
+  getYearsWithMultipleWinner() {
     this.movieService
       .get({ projection: 'years-with-multiple-winners' })
       .subscribe((data: YearsWithMultipleWinners) => {
         this.yearsWithMultipleWinner = data;
       });
-
+  }
+  getStudioWithWinCount() {
     this.movieService
       .get({ projection: 'studios-with-win-count' })
       .subscribe((data: StudioWithWinCount) => {
         this.studiosWithWinCount = data;
       });
+  }
+
+  getMaxMinWinInterval() {
     this.movieService
       .get({ projection: 'max-min-win-interval-for-producers' })
       .subscribe((data: MaxMinWinInterval) => {
@@ -53,7 +59,7 @@ export class DashboardComponent implements OnInit {
   searchByYear() {
     if (this.inputYear) {
       this.movieService
-        .get({ winner: true, year: this.inputYear })
+        .get({ winner: true, year: this.inputYear || '' })
         .subscribe((data: Movies[]) => {
           this.movies = data;
         });
